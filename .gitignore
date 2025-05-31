@@ -1,0 +1,6 @@
+.terraform/
+terraform.tfstate*
+crash.log
+gitea/data/git/.ssh/
+gitea/data/ssh/
+grafana/plugins/
