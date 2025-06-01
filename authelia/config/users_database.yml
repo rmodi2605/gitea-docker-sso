@@ -1,0 +1,22 @@
+users:
+  raj:
+    displayname: "Raj Modi"
+    password: "$argon2id$v=19$m=65536,t=3,p=4$Fyczrhj7XevjZHGJvHUUDA$GQWfGWwx/IMIIeODgJ2qLg16kdRfMMF+MsxGSq3kg5k"
+    email: raj@example.com
+    groups:
+      - admins
+
+  bob:
+    displayname: "Bob Jones"
+    password: "$argon2id$v=19$m=65536,t=3,p=4$fBeFu6bFjYWIdiZCTIA/5g$RGQbuPi1XKFsMAkC4EARHznIhcwYhSG+Xozw/Jq+QcQ"
+    email: bob@example.com
+    groups:
+      - users
+
+  alice:
+    displayname: "Alice Smith"
+    password: "$argon2id$v=19$m=65536,t=3,p=4$HFJzRgTWv9skgXxac9lS8A$4QBcxO9JFJIPbwlNF80BP1xPMM5DS1IopWEuDMxNKqw"
+    email: alice@example.com
+    groups:
+      - users
+
