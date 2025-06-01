@@ -54,6 +54,8 @@ services:
     command: -config.file=/etc/promtail/promtail-config.yml
     networks:
       - gitea-network
+    depends_on:
+      - loki
     restart: unless-stopped
 
   grafana:
@@ -64,10 +66,35 @@ services:
       - GF_SECURITY_ADMIN_PASSWORD=admin
     volumes:
       - /root/gitea-docker/grafana:/var/lib/grafana
-#    ports:
-#      - "3000:3000"
     networks:
       - gitea-network
+    depends_on:
+      - loki
+
+  cadvisor:
+    image: gcr.io/cadvisor/cadvisor:latest
+    container_name: cadvisor
+    ports:
+      - "8080:8080"
+    volumes:
+      - /:/rootfs:ro
+      - /var/run:/var/run:ro
+      - /sys:/sys:ro
+      - /var/lib/docker/:/var/lib/docker:ro
+    networks:
+      - gitea-network
+
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: prometheus
+    ports:
+      - "9090:9090"
+    volumes:
+      - /root/gitea-docker/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+    networks:
+      - gitea-network
+    depends_on:
+      - cadvisor
 
 networks:
   gitea-network:
