@@ -46,30 +46,30 @@ services:
       - gitea
     restart: unless-stopped
 
-#  loki:
-#    image: grafana/loki:3.4.1
-#    container_name: loki
-#    volumes:
-#      - /root/gitea-docker-sso/loki:/etc/loki
-#    ports:
-#      - "3100:3100"
-#    command: -config.file=/etc/loki/loki-config.yml
-#    networks:
-#      - gitea-network
-#    restart: unless-stopped
+  loki:
+    image: grafana/loki:3.4.1
+    container_name: loki
+    volumes:
+      - /root/gitea-docker-sso/loki:/etc/loki
+    ports:
+      - "3100:3100"
+    command: -config.file=/etc/loki/loki-config.yml
+    networks:
+      - gitea-network
+    restart: unless-stopped
 
-#  promtail:
-#    image: grafana/promtail:3.4.1
-#    container_name: promtail
-#    volumes:
-#      - /var/log:/var/log
-#      - /root/gitea-docker-sso/promtail:/etc/promtail
-#    command: -config.file=/etc/promtail/promtail-config.yml
-#    networks:
-#      - gitea-network
-#    depends_on:
-#      - loki
-#    restart: unless-stopped
+  promtail:
+    image: grafana/promtail:3.4.1
+    container_name: promtail
+    volumes:
+      - /var/log:/var/log
+      - /root/gitea-docker-sso/promtail:/etc/promtail
+    command: -config.file=/etc/promtail/promtail-config.yml
+    networks:
+      - gitea-network
+    depends_on:
+      - loki
+    restart: unless-stopped
 
   grafana:
     image: grafana/grafana
@@ -81,33 +81,33 @@ services:
       - /root/gitea-docker-sso/grafana:/var/lib/grafana
     networks:
       - gitea-network
-#    depends_on:
-#      - loki
+    depends_on:
+      - loki
 
-#  cadvisor:
-#    image: gcr.io/cadvisor/cadvisor:latest
-#    container_name: cadvisor
-#    ports:
-#      - "8080:8080"
-#    volumes:
-#      - /:/rootfs:ro
-#      - /var/run:/var/run:ro
-#      - /sys:/sys:ro
-#      - /var/lib/docker/:/var/lib/docker:ro
-#    networks:
-#      - gitea-network
+  cadvisor:
+    image: gcr.io/cadvisor/cadvisor:latest
+    container_name: cadvisor
+    ports:
+      - "8080:8080"
+    volumes:
+      - /:/rootfs:ro
+      - /var/run:/var/run:ro
+      - /sys:/sys:ro
+      - /var/lib/docker/:/var/lib/docker:ro
+    networks:
+      - gitea-network
 
-#  prometheus:
-#    image: prom/prometheus:latest
-#    container_name: prometheus
-#    ports:
-#      - "9090:9090"
-#    volumes:
-#      - /root/gitea-docker-sso/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
-#    networks:
-#      - gitea-network
-#    depends_on:
-#      - cadvisor
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: prometheus
+    ports:
+      - "9090:9090"
+    volumes:
+      - /root/gitea-docker-sso/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+    networks:
+      - gitea-network
+    depends_on:
+      - cadvisor
 
 networks:
   gitea-network:
